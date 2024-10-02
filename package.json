@@ -28,6 +28,7 @@
     "#abilities/*": "./app/abilities/*.js",
     "#database/*": "./database/*.js",
     "#tests/*": "./tests/*.js",
+    "#components/*": "./inertia/components/*.vue",
     "#start/*": "./start/*.js",
     "#config/*": "./config/*.js"
   },
@@ -61,13 +62,14 @@
     "@adonisjs/shield": "^8.1.1",
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^3.0.0",
+    "@headlessui/vue": "^1.7.23",
     "@inertiajs/vue3": "^1.2.0",
     "@vinejs/vine": "^2.1.0",
     "edge.js": "^6.0.2",
     "luxon": "^3.5.0",
     "mysql2": "^3.11.3",
     "reflect-metadata": "^0.2.2",
-    "vue": "^3.5.6"
+    "vue": "^3.5.10"
   },
   "hotHook": {
     "boundaries": [
