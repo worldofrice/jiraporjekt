@@ -4,11 +4,11 @@ import { RadioGroup, RadioGroupLabel, RadioGroupOption, DisclosureButton, Disclo
 import { ChevronUpIcon } from '@heroicons/vue/20/solid'
 
 const ratingOptions = [
-  { name: '1' },
-  { name: '2' },
-  { name: '3' },
-  { name: '4' },
-  { name: '5' },
+  { name: '1', value: 1 },
+  { name: '2', value: 2 },
+  { name: '3', value: 3 },
+  { name: '4', value: 4 },
+  { name: '5', value: 5 },
 ]
 
 export default {
@@ -44,7 +44,7 @@ export default {
     <RadioGroup v-model="mem" class="mt-2" name="rating">
       <RadioGroupLabel class="sr-only"> Vali hinnang </RadioGroupLabel>
       <div class="grid grid-cols-5 gap-3 sm:grid-cols-5">
-        <RadioGroupOption as="template" v-for="option in ratingOptions" :key="option.name" :value="option.name"
+        <RadioGroupOption as="template" v-for="option in ratingOptions" :key="option.name" :value="option.value" id="rating"
           v-slot="{ checked }">
           <div
             :class="['cursor-pointer focus:outline-none', checked ? 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700' : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50', 'border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1']">
