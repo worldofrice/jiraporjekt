@@ -9,3 +9,9 @@ export default class FeedbacksController {
     response.redirect().toPath('/feedback')
   }
 }
+
+
+// 22: {
+//   rating: 1,
+//   comment: "afafafa"
+// }
