@@ -1,13 +1,46 @@
 <script setup lang="ts">
-  import { Head } from '@inertiajs/vue3'
-  import Course from '../components/course.vue'
-import { EnvelopeIcon } from '@heroicons/vue/20/solid'
-  const courses = [
-    "Matemaatika",
-    "Inglise keel",
-    "Eesti keel",
-    "Programmeerimine"
-  ]
+import { Head } from '@inertiajs/vue3';
+import Course from '../components/course.vue';
+import { router } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { EnvelopeIcon } from '@heroicons/vue/20/solid';
+
+// Define props for courses
+const props = defineProps<{
+  courses: { id: number; name: string }[];
+}>();
+
+// Create a reactive object to hold feedback
+const feedback = ref<{ [key: number]: { rating: number; comment: string } }>({});
+const userName = ref('');
+const userClass = ref('');
+
+// Initialize the feedback structure for each course
+const initFeedback = () => {
+  props.courses.forEach(course => {
+    feedback.value[course.id] = {
+      rating: 0,
+      comment: '',
+    };
+  });
+};
+
+initFeedback();
+
+// Method to handle form submission
+const submitFeedback = () => {
+
+  const feedbackToSubmit = {
+    name: userName.value,
+    class: userClass.value,
+    feedback: feedback.value,
+  };
+
+  // Handle the submission logic here, e.g., sending data to your API
+  //console.log(feedback.value);
+  router.post('/feedback', feedbackToSubmit);
+  // Example: Inertia.post('/feedback', feedback.value);
+};
 </script>
 
 <template>
@@ -15,13 +48,39 @@ import { EnvelopeIcon } from '@heroicons/vue/20/solid'
   <Head title="Feedback" />
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
     <div class="max-w-3xl mx-auto my-20">
-      <form action="#" method="post" class="justify-center flex flex-col">
+      <form @submit.prevent="submitFeedback" class="justify-center flex flex-col">
+
+        <!-- Name Input Field -->
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+          <input
+            id="name"
+            v-model="userName"
+            type="text"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+
+        <!-- Class Input Field -->
+        <div class="mb-4">
+          <label for="class" class="block text-sm font-medium text-gray-700">Your Class</label>
+          <input
+            id="class"
+            v-model="userClass"
+            type="text"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Enter your class"
+            required
+          />
+        </div>
+
         <div class="bg-white shadow overflow-hidden rounded-md">
           <ul role="list" class="divide-y divide-gray-200">
-            <li v-for="course in courses" class="px-6 py-4" :key="course">
-              <Course :name="course" />
+            <li v-for="course in props.courses" class="px-6 py-4" :key="course.id">
+              <Course :name="course.name" :courseId="course.id" v-model="feedback[course.id]" />
             </li>
           </ul>
         </div>
