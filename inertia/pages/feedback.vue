@@ -8,7 +8,6 @@ import { EnvelopeIcon } from '@heroicons/vue/20/solid';
 // Define props for courses
 const props = defineProps<{
   courses: Course[];
-  
 }>();
 
 export interface Course {
