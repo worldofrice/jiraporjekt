@@ -8,6 +8,7 @@ import { EnvelopeIcon } from '@heroicons/vue/20/solid';
 // Define props for courses
 const props = defineProps<{
   courses: Course[];
+  errors?: { [key: string]: [string] };
 }>();
 
 export interface Course {
@@ -39,12 +40,15 @@ initFeedback();
 
 // Method to handle form submission
 const submitFeedback = () => {
-
   const feedbackToSubmit = {
     name: userName.value,
     class: userClass.value,
     feedback: feedback.value,
   };
+
+  if (props.errors) {
+    console.log("erororr", props.errors)
+  }
 
   console.log(feedback.value)
 
@@ -67,18 +71,18 @@ const submitFeedback = () => {
           <!-- Name Input Field -->
           <div
             class="col-span-6 sm:col-span-3 border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
-            <label for="name" class="block text-xs font-medium text-gray-900">Name</label>
+            <label for="name" class="block text-sm font-medium text-gray-900">Name</label>
             <input required v-model="userName" type="text" name="name" id="name"
-              class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+              class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm outline-none"
               placeholder="Enter your name" />
           </div>
 
           <!-- Class Input Field -->
           <div
             class="col-span-6 sm:col-span-3 border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
-            <label for="name" class="block text-xs font-medium text-gray-900">Name</label>
+            <label for="name" class="block text-sm font-medium text-gray-900">Class Number</label>
             <input required v-model="userClass" type="text" name="name" id="name"
-              class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+              class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm outline-none"
               placeholder="Enter your class" />
           </div>
         </div>
@@ -86,7 +90,8 @@ const submitFeedback = () => {
         <div class="bg-white border border-gray-300 shadow overflow-hidden rounded-md">
           <ul role="list" class="divide-y divide-gray-200">
             <li v-for="(course, i) in props.courses" class="px-6 py-4" :key="course.id">
-              <Course v-model="feedback[i]" />
+              <Course v-model="feedback[i]" v-if="props.errors"  :errors="props.errors[`feedback.${i}.rating`]" />
+              <Course v-model="feedback[i]" v-else />
             </li>
           </ul>
         </div>

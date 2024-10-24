@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import Feedback from '#models/feedback'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
 
 export default class Student extends BaseModel {
   @column({ isPrimary: true })
@@ -10,6 +12,9 @@ export default class Student extends BaseModel {
 
   @column()
   declare class: string
+
+  @hasMany(() => Feedback)
+  declare feedbacks: HasMany<typeof Feedback>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

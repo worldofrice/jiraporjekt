@@ -16,7 +16,7 @@ export default class extends BaseSchema {
     this.schema.createTable('students', (table) => {
       table.increments('id').primary()
       table.string('name').notNullable()
-      table.string('class').notNullable()
+      table.string('class').nullable()
       table.dateTime('created_at')
       table.dateTime('updated_at')
     })
@@ -25,18 +25,13 @@ export default class extends BaseSchema {
     this.schema.createTable('feedbacks', (table) => {
       table.increments('id').primary()
       table.integer('rating').notNullable()
-      table.text('comment').notNullable()
+      table.text('comment').nullable()
       table.dateTime('created_at')
       table.dateTime('updated_at')
 
       // Foreign keys
-      table.integer('course_id').unsigned().references('id').inTable('courses').onDelete('CASCADE')
-      table
-        .integer('student_id')
-        .unsigned()
-        .references('id')
-        .inTable('students')
-        .onDelete('CASCADE')
+      table.integer('course_id').unsigned().references('courses.id').onDelete('CASCADE')
+      table.integer('student_id').unsigned().references('students.id').onDelete('CASCADE')
     })
   }
 
