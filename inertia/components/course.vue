@@ -2,6 +2,7 @@
 import { ref, defineProps, watch } from 'vue';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption, DisclosureButton, Disclosure, DisclosurePanel } from '@headlessui/vue';
 import { ChevronUpIcon } from '@heroicons/vue/20/solid';
+import { Course } from '~/pages/feedback.vue';
 
 const ratingOptions = [
   { name: '1', value: 1 },
@@ -13,8 +14,7 @@ const ratingOptions = [
 
 // Define props for name and modelValue
 const props = defineProps<{
-  name: string;
-  modelValue: { rating: number; comment: string };
+  modelValue: Course;
 }>();
 
 const selectedRating = ref(props.modelValue.rating);
@@ -33,7 +33,7 @@ watch(comment, (newVal) => {
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <h2 class="text-lg font-semibold text-gray-900">{{ props.name }}</h2>
+      <h2 class="text-lg font-semibold text-gray-900">{{ props.modelValue.name }}</h2>
     </div>
 
     <RadioGroup v-model="selectedRating" class="mt-2" name="rating">
