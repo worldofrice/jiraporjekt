@@ -14,12 +14,12 @@ jobs:
     runs-on: self-hosted
     environment: prod
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
-    # permissions:
-    #   contents: read
-    #   packages: write
-    #   attestations: write
-    #   id-token: write
-    #   # 
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+      # 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
