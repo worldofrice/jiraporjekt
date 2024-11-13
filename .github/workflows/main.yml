@@ -75,8 +75,8 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           REGISTRY: ghcr.io
-          IMAGE: ${{ github.repository }}
-          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE: ${{ env.IMAGE_NAME }}
+          IMAGE_NAME: ${{ github.repository }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
@@ -84,11 +84,11 @@ jobs:
           port: 22
           envs: PORT,HOST,APP_KEY,LOG_LEVEL,SESSION_DRIVER,DB_HOST,DB_PORT,DB_USER,DB_PASSWORD,DB_DATABASE,REGISTRY,IMAGE_NAME,IMAGE
           script: |
-            docker stop $IMAGE_NAME || true
-            docker rm $IMAGE_NAME || true
+            docker stop $IMAGE || true
+            docker rm $IMAGE || true
             docker run -d \
             --restart always \
-            --name $IMAGE_NAME \
+            --name $IMAGE \
             -p $PORT:$PORT \
             -e PORT=$PORT \
             -e HOST=$HOST \
@@ -100,4 +100,4 @@ jobs:
             -e DB_USER=$DB_USER \
             -e DB_PASSWORD=$DB_PASSWORD \
             -e DB_DATABASE=$DB_DATABASE \
-            $REGISTRY/$IMAGE:main
+            $REGISTRY/$IMAGE_NAME:main
