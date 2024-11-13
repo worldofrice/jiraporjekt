@@ -1,0 +1,55 @@
+name: Create and publish a Docker image
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy:
+    environment: prod
+    runs-on: self-hosted
+    steps:
+      - name: Deploy to Digital Ocean droplet via SSH action
+        uses: appleboy/ssh-action@v1.1.0
+        env:
+          PORT: 3333
+          HOST: "0.0.0.0"
+          APP_KEY: ${{ secrets.APP_KEY }}
+          LOG_LEVEL: "debug"
+          SESSION_DRIVER: "cookie"
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          REGISTRY: ghcr.io
+          IMAGE_NAME: ${{ github.repository }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          envs: PORT,HOST,APP_KEY,LOG_LEVEL,SESSION_DRIVER,DB_HOST,DB_PORT,DB_USER,DB_PASSWORD,DB_DATABASE,REGISTRY,IMAGE_NAME
+          script: |
+            docker stop jiraporjekt || true
+            docker rm jiraporjekt || true
+            docker run -d \
+            --restart always \
+            --name jiraporjekt \
+            -p $PORT:$PORT \
+            -e PORT=$PORT \
+            -e HOST=$HOST \
+            -e APP_KEY=$APP_KEY \
+            -e LOG_LEVEL=$LOG_LEVEL \
+            -e SESSION_DRIVER=$SESSION_DRIVER \
+            -e DB_HOST=$DB_HOST \
+            -e DB_PORT=$DB_PORT \
+            -e DB_USER=$DB_USER \
+            -e DB_PASSWORD=$DB_PASSWORD \
+            -e DB_DATABASE=$DB_DATABASE \
+            $REGISTRY/$IMAGE_NAME:main
