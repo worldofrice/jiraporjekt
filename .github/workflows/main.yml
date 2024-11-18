@@ -100,3 +100,6 @@ jobs:
             -e DB_PASSWORD=$DB_PASSWORD \
             -e DB_DATABASE=$DB_DATABASE \
             $REGISTRY/$IMAGE_NAME:main
+
+            docker ps -q -f name=jiraporjekt || exit 1
+
