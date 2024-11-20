@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import Course from '../components/course.vue';
+import Course from '../components/courseinput.vue';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { EnvelopeIcon } from '@heroicons/vue/20/solid';
@@ -84,7 +84,7 @@ const submitFeedback = () => {
         <div class="bg-white border border-gray-300 shadow overflow-hidden rounded-md">
           <ul role="list" class="divide-y divide-gray-200">
             <li v-for="(course, i) in props.courses" class="px-6 py-4" :key="course.id">
-              <Course v-model="feedback[i]" v-if="props.errors"  :errors="props.errors[`feedback.${i}.rating`]" />
+              <Course v-model="feedback[i]" v-if="props.errors" :errors="props.errors[`feedback.${i}.rating`]" />
               <Course v-model="feedback[i]" v-else />
             </li>
           </ul>

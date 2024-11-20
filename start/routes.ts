@@ -7,13 +7,11 @@
 |
 */
 
+import AdminController from '#controllers/admin_controller';
 import FeedbacksController from '#controllers/feedbacks_controller';
 import router from '@adonisjs/core/services/router';
-import AdminPage from '#components/adminpage.vue';
 
 router.on('/').renderInertia('home');
 router.get('/feedback', [FeedbacksController, 'index']);
 router.post('/feedback', [FeedbacksController, 'create']);
-router.get('/adminpage', ({ view }) => {
-    return view.render('adminpage');
-});
+router.get('/adminpage', [AdminController, 'index']); 
