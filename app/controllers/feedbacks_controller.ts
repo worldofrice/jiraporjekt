@@ -34,6 +34,6 @@ export default class FeedbacksController {
       await student.related('feedbacks').save(feedback)
     }
 
-    response.redirect().toPath('/')
+    response.redirect().toPath('/adminpage')
   }
 }

@@ -11,7 +11,7 @@ import AdminController from '#controllers/admin_controller';
 import FeedbacksController from '#controllers/feedbacks_controller';
 import router from '@adonisjs/core/services/router';
 
-router.on('/').renderInertia('home');
+router.on('/').redirect('/feedback');
 router.get('/feedback', [FeedbacksController, 'index']);
 router.post('/feedback', [FeedbacksController, 'create']);
 router.get('/adminpage', [AdminController, 'index']); 

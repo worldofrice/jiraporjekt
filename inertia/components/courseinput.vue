@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, defineProps, watch } from 'vue';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption, DisclosureButton, Disclosure, DisclosurePanel } from '@headlessui/vue';
-import { ChevronUpIcon, ExclamationCircleIcon } from '@heroicons/vue/20/solid';
+import { ChevronUpIcon } from '@heroicons/vue/20/solid';
 import { Course } from '~/pages/feedback.vue';
 
 const ratingOptions = [

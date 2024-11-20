@@ -2,7 +2,7 @@
 import { defineProps } from 'vue';
 import { CourseInfo } from '../pages/adminpage.vue';
 
-const props = defineProps<{
+defineProps<{
   modelValue: CourseInfo;
 }>();
 </script>
